@@ -75,6 +75,10 @@ class MyGridLayout(Widget):
             self.saveAs()
 
 
+    def error_readOnly(self):
+        # handler for read-only error
+        print("this is an error")
+        
 
 
 class MyApp(App):
