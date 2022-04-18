@@ -10,6 +10,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 import os
 
+import shutil
 # current: variable storing currently opened file path, to be accessed across functions
 global current
 current = False
@@ -37,6 +38,7 @@ class MyGridLayout(Widget):
         if path:
             global current
             current = path
+            self.ids.file_open.text = "Editing: " + path #shows what file is currently open
             file = open(path, 'r')
             contents = file.read()
             file.close()
@@ -50,8 +52,7 @@ class MyGridLayout(Widget):
         if os.path.isfile(current):
             os.remove(current)
             messagebox.showinfo("Delete", "File successfully deleted.")
-
-
+            self.ids.file_open.text = "No Open File" 
 
     def saveAs(self):
         Tk().withdraw() # hide tkinter window
@@ -83,6 +84,19 @@ class MyGridLayout(Widget):
             messagebox.showinfo("Save", "File successfully saved.")
         else:
             self.saveAs()
+    
+    def moveFile(self):
+        Tk().withdraw()
+        global current
+        if current:
+            moveHere = filedialog.askdirectory()
+            shutil.move(current, moveHere)
+            current = False
+            self.ids.file_open.text = "No Open File"
+            self.ids.text_input.text = ""
+            messagebox.showinfo("Move", "File successfully moved.")
+        else:
+            messagebox.showinfo("Move", "Please open a file and try again.")
 
     # terminal interface to manually select what error to trigger
     def error_trigger(self):
