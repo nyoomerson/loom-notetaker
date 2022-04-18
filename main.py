@@ -62,17 +62,21 @@ class MyGridLayout(Widget):
             file.write(self.ids.text_input.text)
             messagebox.showinfo("Save As", "File successfully saved.")
 
+        global current
+        current = path
+
 
     def new(self):
         # first clear contents
         self.ids.text_input.text = ""
 
-        # reset current to FALSE so that save will trigger as saveAs
-        global current
-        current = False
+        # reset current to FALSE so that save will trigger as saveA
+        #current = False
 
         # functionally the same as saveAs
         self.saveAs()
+
+        self.ids.file_open.text = "Editing: " + current #shows what file is currently open
 
     def save(self):
         # checks whether a previously saved file is currently open
