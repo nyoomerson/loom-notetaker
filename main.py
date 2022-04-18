@@ -42,6 +42,16 @@ class MyGridLayout(Widget):
             file.close()
             self.ids.text_input.text = contents
 
+    def delete(self):
+        Tk().withdraw()
+        self.ids.text_input.text = ""
+
+        global current
+        if os.path.isfile(current):
+            os.remove(current)
+            messagebox.showinfo("Delete", "File successfully deleted.")
+
+
 
     def saveAs(self):
         Tk().withdraw() # hide tkinter window
