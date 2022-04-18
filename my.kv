@@ -49,9 +49,34 @@
                 on_press: root.saveAs()
 
             Button:
+                text: "Link File (Exists)"
+                size_hint: (.2, 1)
+                on_press: root.link()
+
+            Button:
+                text: "Link File (DNE)"
+                size_hint: (.2, 1)
+                on_press: root.link()
+
+            Button:
+                text: "Delete File"
+                size_hint: (.2, 1)
+                on_press: root.delete()
+
+            Button:
+                text: "Move Current File"
+                size_hint: (.2, 1)
+                on_press: root.moveFile()
+
+            Button:
                 text: "Trigger Error"
                 size_hint: (.2, 1)
                 on_press: root.error_trigger()
+        
+        Label:
+            id: file_open
+            text:"No Open File"
+            size_hint: (1, .04)
 
         TextInput:
             id: text_input
