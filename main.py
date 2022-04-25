@@ -77,16 +77,16 @@ class MyGridLayout(Widget):
     # terminal interface to manually select what error to trigger
     def error_trigger(self):
         
-        errors = ["Read-only Error"]
+        errors = ["Read-only Error", "Create File Failure"]
         print("Please select what error you wish to trigger:")
 
         for i in range(len(errors)):
-            print('\t{0} {1}\n'.format(str(i), errors[i]))
+            print('\t{0} {1}'.format(str(i), errors[i]))
 
         whichError = int(input("Enter the index of the error: "))
         
         if whichError in range(len(errors)):
-            print("You selected {0}.\n".format(errors[whichError]))
+            print("ERROR: {0}.\n".format(errors[whichError]))
         
 
 
