@@ -17,66 +17,88 @@
 
 <MyGridLayout>:
 
-    id: text_input
-    cols: 1
-    BoxLayout:
-        
-        cols: 2 
-        orientation: "vertical"
+    GridLayout:
+        cols: 2
+        rows: 1
         size: root.width, root.height
 
+        GridLayout:
+
+            size_hint_x: 0.2
+            rows: 2
+            
+            TextInput:
+                id: search_bar
+                size_hint_y: None
+                height: 30
+                text: "Search"
+                multiline: False
+                on_text_validate: root.search()
+                margins: [3, 3, 3, 3]
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    id: search_matches
+                    text: "No search query given"
+
         BoxLayout:
-            size_hint: (1, 0.1)
+            
+            cols: 2 
+            orientation: "vertical"
 
-            Button:
-                text: "New File"
-                size_hint: (.2, 1)
-                on_press: root.new()
+            BoxLayout:
+                size_hint: (1, 0.1)
 
-            Button:
-                text: "Open File"
-                size_hint: (.2, 1)
-                on_press: root.open()
+                Button:
+                    text: "New File"
+                    size_hint: (.2, 1)
+                    on_press: root.new()
 
-            Button:
-                text: "Save File"
-                size_hint: (.2, 1)
-                on_press: root.save()
+                Button:
+                    text: "Open File"
+                    size_hint: (.2, 1)
+                    on_press: root.open()
 
-            Button:
-                text: "Save As File"
-                size_hint: (.2, 1)
-                on_press: root.saveAs()
+                Button:
+                    text: "Save File"
+                    size_hint: (.2, 1)
+                    on_press: root.save()
 
-            Button:
-                text: "Link File (Exists)"
-                size_hint: (.2, 1)
-                on_press: root.link()
+                Button:
+                    text: "Save As File"
+                    size_hint: (.2, 1)
+                    on_press: root.saveAs()
 
-            Button:
-                text: "Link File (DNE)"
-                size_hint: (.2, 1)
-                on_press: root.link()
+                Button:
+                    text: "Link File (Exists)"
+                    size_hint: (.2, 1)
+                    on_press: root.link()
 
-            Button:
-                text: "Delete File"
-                size_hint: (.2, 1)
-                on_press: root.delete()
+                Button:
+                    text: "Link File (DNE)"
+                    size_hint: (.2, 1)
+                    on_press: root.link()
 
-            Button:
-                text: "Move Current File"
-                size_hint: (.2, 1)
-                on_press: root.moveFile()
+                Button:
+                    text: "Delete File"
+                    size_hint: (.2, 1)
+                    on_press: root.delete()
 
-            Button:
-                text: "Trigger Error"
-                size_hint: (.2, 1)
-                on_press: root.error_trigger()
-        
-        Label:
-            id: file_open
-            text:"No Open File"
-            size_hint: (1, .04)
+                Button:
+                    text: "Move Current File"
+                    size_hint: (.2, 1)
+                    on_press: root.moveFile()
 
-        TextInput:
-            id: text_input
+                Button:
+                    text: "Trigger Error"
+                    size_hint: (.2, 1)
+                    on_press: root.error_trigger()
+            
+            Label:
+                id: file_open
+                text:"No Open File"
+                size_hint: (1, .04)
+
+            TextInput:
+                id: text_input
