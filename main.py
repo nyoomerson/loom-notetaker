@@ -10,6 +10,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 import os
 
+import shutil
 # current: variable storing currently opened file path, to be accessed across functions
 global current
 current = False
@@ -37,11 +38,21 @@ class MyGridLayout(Widget):
         if path:
             global current
             current = path
+            self.ids.file_open.text = "Editing: " + path #shows what file is currently open
             file = open(path, 'r')
             contents = file.read()
             file.close()
             self.ids.text_input.text = contents
 
+    def delete(self):
+        Tk().withdraw()
+        self.ids.text_input.text = ""
+
+        global current
+        if os.path.isfile(current):
+            os.remove(current)
+            messagebox.showinfo("Delete", "File successfully deleted.")
+            self.ids.file_open.text = "No Open File" 
 
     def saveAs(self):
         Tk().withdraw() # hide tkinter window
@@ -51,17 +62,21 @@ class MyGridLayout(Widget):
             file.write(self.ids.text_input.text)
             messagebox.showinfo("Save As", "File successfully saved.")
 
+        global current
+        current = path
+
 
     def new(self):
         # first clear contents
         self.ids.text_input.text = ""
 
-        # reset current to FALSE so that save will trigger as saveAs
-        global current
-        current = False
+        # reset current to FALSE so that save will trigger as saveA
+        #current = False
 
         # functionally the same as saveAs
         self.saveAs()
+
+        self.ids.file_open.text = "Editing: " + current #shows what file is currently open
 
     def save(self):
         # checks whether a previously saved file is currently open
@@ -73,6 +88,19 @@ class MyGridLayout(Widget):
             messagebox.showinfo("Save", "File successfully saved.")
         else:
             self.saveAs()
+    
+    def moveFile(self):
+        Tk().withdraw()
+        global current
+        if current:
+            moveHere = filedialog.askdirectory()
+            shutil.move(current, moveHere)
+            current = False
+            self.ids.file_open.text = "No Open File"
+            self.ids.text_input.text = ""
+            messagebox.showinfo("Move", "File successfully moved.")
+        else:
+            messagebox.showinfo("Move", "Please open a file and try again.")
 
     # terminal interface to manually select what error to trigger
     def error_trigger(self):
