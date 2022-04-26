@@ -12,4 +12,6 @@ def scan_direct():
         print(i)
         directoryContent.append(i)
 
+    return directoryContent
+
 scan_direct()
