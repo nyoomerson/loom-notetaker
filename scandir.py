@@ -1,4 +1,5 @@
 import os 
+import re
 
 from os import scandir, walk
 
@@ -9,9 +10,15 @@ def scan_direct():
     directoryContent = []
 
     for i in x:
-        print(i)
+        i = str(i)[11:-2]
         directoryContent.append(i)
 
     return directoryContent
 
-scan_direct()
+def match_direct(keyword):
+    search_space = scan_direct()
+    results = []
+    for line in search_space:
+        if re.search(keyword, line):
+            results.append(line)
+    return results
