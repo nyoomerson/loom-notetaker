@@ -16,10 +16,14 @@ import re
     # '/(\*|_)(.*?)\1/' => '[i]\2[/i]',                       // emphasis
 
 def process_bold(candidate):
-    return re.sub('(\*\*|__)(.*?)\1', '[b]\2[/b]', candidate, 2)
+    # return re.sub('(\*\*|__)(.*?)\1', '[b]\2[/b]', candidate, 2)
+    return re.sub('\*\*(.*)\*\*', '[b]\g<1>[/b]', candidate)
 
 def process_italics(candidate):
-    return re.sub('(\*|_)(.*?)\1', '[i]\2[/i]', candidate, 2)
+    return re.sub('(\*|_)(.*?)\1', '[i]\g<1>[/i]', candidate, 2)
+
+def process_links(candidate):
+    return re.sub('\[([^\[]+)\]\(([^\)]+)\)', 'link test')
 
     # the following is taken from Slimdown, but it needs further editing as some of these don't work yet
 
@@ -35,7 +39,8 @@ def process_italics(candidate):
 
 # testing 
 
-candidate = "this should be **bold**"
+candidate = "this should be **bold** and also **this** too but not *this*."
 candidate2 = "this should be *italics*"
+candidate3 = "this is a [link](https://example.com)"
 
-
+print(process_bold(candidate))
