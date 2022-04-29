@@ -3,14 +3,19 @@ from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.widget import Widget 
+from kivy.base import runTouchApp
+from kivy.lang import Builder
 
 # from tkinter import *
 from tkinter import Tk
 from tkinter import filedialog
 from tkinter import messagebox
-import os
 
+import os
 import shutil
+
+from scandir import match_direct, match_soft
+
 # current: variable storing currently opened file path, to be accessed across functions
 global current
 current = False
@@ -115,27 +120,33 @@ class MyGridLayout(Widget):
     # searches using NAME of notes
     def search(self):
 
-        USE_SAMPLE_NOTELIST = True
+        USE_SAMPLE_NOTELIST = False
+        SEARCH_MATCH_CASE = False
 
         search_string = self.ids.search_bar.text
         print("Search string:", search_string)
 
-        if USE_SAMPLE_NOTELIST:  # CURRENTLY BUILT TO ONLY HANDLE INPUT FROM TEXT FILE
+        # Toggle between matching case and not
+        match = match_soft
+        if SEARCH_MATCH_CASE:
+            match = match_direct
+
+        search_space = match(search_string)
+        if USE_SAMPLE_NOTELIST: 
             search_space = open("sample_notelist.txt", "r").readlines()
+
+        print(search_space)
 
         self.ids.search_matches.text = "" 
         matches_found = 0
 
-        for name in search_space:    
-            if search_string in name:
-                print(name)
-                matches_found += 1
-                self.ids.search_matches.text += name
+        for name in search_space:
+            matches_found += 1
+            self.ids.search_matches.text += name + "\n\n"
             
         if matches_found == 0:
             self.ids.search_matches.text = "No matches found"
                     
-
 
     # ERROR INTERFACE   ===============================================
 

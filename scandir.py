@@ -15,10 +15,20 @@ def scan_direct():
 
     return directoryContent
 
+
 def match_direct(keyword):
     search_space = scan_direct()
     results = []
     for line in search_space:
         if re.search(keyword, line):
+            results.append(line)
+    return results
+
+
+def match_soft(keyword):
+    search_space = scan_direct()
+    results = []
+    for line in search_space:
+        if re.search(keyword.lower(), line.lower()):
             results.append(line)
     return results
