@@ -24,23 +24,34 @@
 
         GridLayout:
 
-            size_hint_x: 0.2
-            rows: 2
+            size_hint_x: 0.27
+            rows: 3
             
             TextInput:
                 id: search_bar
                 size_hint_y: None
                 height: 30
-                text: "Search"
+                hint_text: "Search"
                 multiline: False
                 on_text_validate: root.search()
                 margins: [3, 3, 3, 3]
 
-            BoxLayout:
-                orientation: "vertical"
+            Label:
+                text: "Results"
+                size_hint_y: None
+                height: 30
+
+            ScrollView:
+                do_scroll: (False, True)  
+                bar_width: 10
                 Label:
                     id: search_matches
+                    size_hint_x: 1
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
                     text: "No search query given"
+
 
         BoxLayout:
             
