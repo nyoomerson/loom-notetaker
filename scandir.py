@@ -19,16 +19,21 @@ def scan_direct():
 def match_direct(keyword):
     search_space = scan_direct()
     results = []
+    paths = []
     for line in search_space:
         if re.search(keyword, line):
             results.append(line)
-    return results
+            paths.append(os.getcwd() + "/" + line)
+    return results, paths
 
 
 def match_soft(keyword):
     search_space = scan_direct()
     results = []
+    paths = []
     for line in search_space:
         if re.search(keyword.lower(), line.lower()):
             results.append(line)
-    return results
+            paths.append(os.getcwd() + "/" + line)
+    return results, paths
+
