@@ -72,53 +72,72 @@
             orientation: "vertical"
 
             BoxLayout:
-                size_hint: (1, 0.1)
+                size_hint: (1, 0.15)
 
                 Button:
                     text: "New File"
                     size_hint: (.2, 1)
                     on_press: root.new()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Open File"
                     size_hint: (.2, 1)
                     on_press: root.open()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Save File"
                     size_hint: (.2, 1)
                     on_press: root.save()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Save As File"
                     size_hint: (.2, 1)
                     on_press: root.saveAs()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Link File (Exists)"
                     size_hint: (.2, 1)
                     on_press: root.link()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Link File (DNE)"
                     size_hint: (.2, 1)
                     on_press: root.link()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Delete File"
                     size_hint: (.2, 1)
                     on_press: root.delete()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
                 Button:
                     text: "Move Current File"
                     size_hint: (.2, 1)
                     on_press: root.moveFile()
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+                    padding: [10,10]
 
-                Button:
-                    text: "Trigger Error"
-                    size_hint: (.2, 1)
-                    on_press: root.error_trigger()
-            
             Label:
                 id: file_open
                 text:"No Open File"
