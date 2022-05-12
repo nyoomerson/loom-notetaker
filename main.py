@@ -1,6 +1,8 @@
+from unittest import result
 import kivy
 from kivy.app import App
 from kivy.uix.popup import Popup
+from kivy.uix.button import Button
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.widget import Widget 
 from kivy.base import runTouchApp
@@ -19,9 +21,35 @@ from scandir import match_direct, match_soft
 # current: variable storing currently opened file path, to be accessed across functions
 global current
 current = False
+global contents
+contents = ""
 
 class FileChoose(Popup):
     load = ObjectProperty()
+
+
+class SearchResult(Button):
+    name = StringProperty('')
+    directory = StringProperty('')
+
+    def __init__(self, name="", dir=""):
+        super(Button, self).__init__()
+        self.name = name
+        self.directory = dir
+
+
+    def click(self):
+        Tk().withdraw()
+        path = self.directory
+        if path:
+            global current
+            current = path
+            file = open(path, 'r')
+            global contents
+            contents = file.read()
+            print(contents)
+            file.close()
+
 
 class MyGridLayout(Widget):
 
@@ -120,7 +148,6 @@ class MyGridLayout(Widget):
     # searches using NAME of notes
     def search(self):
 
-        USE_SAMPLE_NOTELIST = False
         SEARCH_MATCH_CASE = False
 
         search_string = self.ids.search_bar.text
@@ -130,23 +157,23 @@ class MyGridLayout(Widget):
         match = match_soft
         if SEARCH_MATCH_CASE:
             match = match_direct
-
         search_space = match(search_string)
-        if USE_SAMPLE_NOTELIST: 
-            search_space = open("sample_notelist.txt", "r").readlines()
 
         print(search_space)
 
         self.ids.search_matches.text = "" 
         matches_found = 0
+        matches_found = len(search_space[0])
 
-        for name in search_space:
-            matches_found += 1
-            self.ids.search_matches.text += name + "\n\n"
-            
         if matches_found == 0:
             self.ids.search_matches.text = "No matches found"
-                    
+        else:
+            for i in range(matches_found):
+                name = search_space[0][i]
+                dir = search_space[1][i]
+                result = SearchResult(name, dir)
+                self.add_widget(result)
+
 
     # ERROR INTERFACE   ===============================================
 
