@@ -3,6 +3,7 @@ import kivy
 from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.widget import Widget 
 from kivy.base import runTouchApp
@@ -23,6 +24,14 @@ global current
 current = False
 global contents
 contents = ""
+global layouts
+layouts = None
+
+
+def update_opened_note():
+    layouts.ids.file_open.text = current
+    layouts.ids.text_input.text = contents
+
 
 class FileChoose(Popup):
     load = ObjectProperty()
@@ -31,14 +40,15 @@ class FileChoose(Popup):
 class SearchResult(Button):
     name = StringProperty('')
     directory = StringProperty('')
+    file = None
 
     def __init__(self, name="", dir=""):
         super(Button, self).__init__()
         self.name = name
         self.directory = dir
 
-
     def click(self):
+        print("Displaying", self.name)
         Tk().withdraw()
         path = self.directory
         if path:
@@ -47,7 +57,7 @@ class SearchResult(Button):
             file = open(path, 'r')
             global contents
             contents = file.read()
-            print(contents)
+            update_opened_note()
             file.close()
 
 
@@ -165,14 +175,17 @@ class MyGridLayout(Widget):
         matches_found = 0
         matches_found = len(search_space[0])
 
+        # clear search queries
+        self.ids.search_matches.clear_widgets()
+
         if matches_found == 0:
-            self.ids.search_matches.text = "No matches found"
+            self.ids.search_matches.add_widget(Label(text="No matches found"))
         else:
             for i in range(matches_found):
                 name = search_space[0][i]
                 dir = search_space[1][i]
                 result = SearchResult(name, dir)
-                self.add_widget(result)
+                self.ids.search_matches.add_widget(result)
 
 
     # ERROR INTERFACE   ===============================================
@@ -196,7 +209,9 @@ class MyGridLayout(Widget):
 class MyApp(App):
 
     def build(self):
-        return MyGridLayout()
+        global layouts
+        layouts = MyGridLayout()
+        return layouts
 
 
 if __name__ == "__main__":
