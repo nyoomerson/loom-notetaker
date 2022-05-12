@@ -19,7 +19,13 @@
     name: self.name
     directory: self.directory
     text: self.name
-    size_hint_x: 1
+    size_hint: (1, None)
+    size_y: 30
+
+    text_size: self.width, None
+    height: self.texture_size[1]
+    padding: [10,10]
+
     on_press: self.click()
 
 
@@ -52,13 +58,12 @@
             ScrollView:
                 do_scroll: (False, True)  
                 bar_width: 10
-                Label:
+                
+                StackLayout:
                     id: search_matches
+                    height: self.minimum_height
                     size_hint_x: 1
                     size_hint_y: None
-                    text_size: self.width, None
-                    height: self.texture_size[1]
-                    text: "No search query given"
 
 
         BoxLayout:
